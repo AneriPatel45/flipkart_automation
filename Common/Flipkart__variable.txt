@@ -1,0 +1,21 @@
+*** Variables ***
+
+${Flipkart_Url}=     https://www.flipkart.com/
+${popup}=      xpath://button[contains(text(),"✕")]
+${login_link}=       xpath://a[contains(text(),"Login")]
+${email}=    css=input[class*='_2IX_2- VJZDxU']
+${password} =   css=input[class*='_2IX_2- _3mctLh VJZDxU']
+${submit}=    css=button[class*='_2KpZ6l _2HKlqd _3AWRsL']
+${myaccount_btn}=    //*[@id="container"]/div/div[1]/div[1]/div[2]/div[3]/div/div/div/div
+${searchmenu}=    css=input[type*='text']
+${search_btn}=    css=button[class*='L0Z3Pu']
+${electronics_txt}=    //*[@id="container"]/div/div[2]/div/div/span[1]
+${samsung_btn}=    //a[contains(text(),'Samsung')]
+${samsung_txt}=    //body/div[@id='container']/div[1]/div[3]/div[2]/div[1]/div[1]/div[2]/a[1] 
+${view_all}=    //body/div[@id='container']/div[1]/div[3]/div[2]/div[1]/div[1]/div[2]/a[1]
+${min_range}=    //div[contains(text(),"to")]/ancestor::div/div[1]/select
+${max_range}=    //body/div[@id='container']/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/section[2]/div[4]/div[3]/select[1]
+${AllItems}=    //div[@class="_1YokD2 _3Mn1Gg"][1]//div[@class="_1AtVbE col-12-12"]/div/div/div/a/div/div/div/div/img
+${next} =                //a/span[contains(text(),"Next")]
+${num}=     css=div._36fx1h._6t1WkM._3HqJxg div._1YokD2._2GoDe3 div._1YokD2._3Mn1Gg:nth-child(2) div._1AtVbE.col-12-12:nth-child(${j}) div._13oc-S div._2kHMtA a._1fQZEK div._3pLy-c.row div.col.col-5-12.nlI3QM:nth-child(2) div._3tbKJL div._25b18c > div._30jeq3._1_WHN1
+
