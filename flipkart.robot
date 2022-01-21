@@ -1,83 +1,67 @@
 *** Settings ***
-Library  SeleniumLibrary
+Library  Selenium2Library
 Library    String
-
-*** Variables ***
-${Flipkart_Url}     https://www.flipkart.com/
-${popup}      xpath://button[contains(text(),"✕")]
-${login_link}       xpath://a[contains(text(),"Login")]
-${email}      xpath://form/div[1]/input[@type="text"]
-${password_box}     xpath://form/div[2]/input[@type="password"]
-${Login_Button}         xpath://form/div[4]/button
-${phone_number}            9664531884
-${password}        aneripatel4520
-${Electronics_Menu}     //*[@id="container"]/div/div[2]/div/div/span[1]
-${samsung}         //a[contains(text(),'Samsung')]
-${view_all}           //*[@id="container"]/div/div[3]/div[2]/div/div[1]/div[2]/a/span
-${electronics}   //*[@id="container"]/div/div[2]/div/div/div[3]
-${min_range}         //div[contains(text(),"to")]/ancestor::div/div[1]/select
-${max_range}    //body/div[@id='container']/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/section[2]/div[4]/div[3]/select[1]
-${next}                 //a/span[contains(text(),"Next")]
-${AllItems}                 //div[@class="_1YokD2 _3Mn1Gg"][1]//div[@class="_1AtVbE col-12-12"]/div/div/div/a/div/div/div/div/img
-
+Resource	Common/Flipkart__variable.txt
+Suite Setup	Open Flipkart
+Suite Teardown	Close Browser
 
 *** Test Cases ***
-Open website
-    Open Browser   ${Flipkart_Url}  Chrome 
-    Maximize Browser Window
 
 Click on Login link
     Click Element    ${popup}
     Click Link       ${login_link}
 
-Enter details
-    Input Text   ${email}     ${phone_number}
-    Sleep  2
-    Input Text   ${password_box}     ${password}
-    Sleep  2
+Login With Your Account
+    Wait Until Element Is Visible    ${email}
+    Input Text	${email}	9664531884
+    Wait Until Element Is Visible    ${password}
+    Input Text	${password}	aneripatel4520
+    Click Element	${submit}
 
-Click on the login button
-    Click Element    ${Login_Button}
-    Sleep  2
-    
-Click on the Electronic
-    Click Element  ${electronics}
-    Sleep  1 
-    Click Element   ${Electronics_Menu}
+Search for the Electronic devices
+    Wait Until Element Is Visible    ${myaccount_btn} 
+    Element Should Be Visible    ${myaccount_btn} 
+    Input Text	${searchmenu}    Electronics
+    Click Element    ${search_btn}
+    Wait Until Element Is Visible    ${electronics_txt}
+    Element Should Be Visible    ${electronics_txt}
+    Click Element    ${electronics_txt}
 
-Click on samsung
-    Sleep  2
-    Click Element   ${samsung}
+View samsung Mobiles
+    Wait Until Element Is Visible    ${samsung_btn}    timeout=5s
+    Element Should Be Visible    ${samsung_btn}        timeout=5s
+    Click Element   ${samsung_btn}
 
 view all items 
-    Sleep  2
-    Click Element  ${view_all} 
-    Wait Until Element Is Visible      ${min_range}
+    Wait Until Element Is Visible    ${samsung_txt}
+    Element Should Be Visible    ${samsung_txt}
+    Click Element    ${view_all} 
+    Wait Until Element Is Visible    ${min_range}
     Click Element  ${min_range}
-    Sleep  2
-    Select From List By Value   ${min_range}  2000
-    Click Element   ${max_range}
-    Select From List By Value   ${max_range}  10000
-    Sleep  2
-
+    Select From List By Value    ${min_range}  2000
+    Click Element    ${max_range}
+    Select From List By Value   ${max_range}  7000
+    Element Should Be Visible    ${AllItems}
 
 check price of each items 
     FOR  ${i}  IN RANGE   500
-        ${count_items} =  Get Element Count  ${AllItems}
-        FOR  ${j}  IN RANGE  1   ${count_items}+1
-            ${price_name} =  Get Text  //div[@class="_1YokD2 _3Mn1Gg"][1]//div[@class="_1AtVbE col-12-12"][${j}]/div/div/div/a/div[2]/div[2]/div[1]/div[1]/div[1]
-
+        ${count_items}=  Get Element Count  ${AllItems}
+        FOR  ${j}  IN RANGE  2   ${count_items}+1
+            ${price_name}=  Get Text    css=div._1YokD2._3Mn1Gg:nth-child(2) div._1AtVbE.col-12-12:nth-child(${j}) div._3tbKJL div> div._30jeq3._1_WHN1
             ${string_name}=	Remove String	${price_name}	₹   ,
             ${price}=   Convert To Integer  ${string_name}
+            Run Keyword Unless    2000 <= ${price} <= 7000    Fail
             
         END 
         Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
             ${next_btn}=  Run Keyword And Return Status    Element Should Be Visible   ${next}
-            Run Keyword if    '${next_btn}'=='True'     Click Element   ${next}
-            Sleep  2
+            Run Keyword if    '${next_btn}'=='True'     Click Element   ${next}  
+            Wait Until Element Is Visible    ${next_btn} 
+            Element Should Be Visible    ${next_btn} 
             Exit For Loop IF    "${next_btn}" == "False"
-            Sleep  2
     END
-    Close Window
 
- 
+*** Keywords ***
+Open Flipkart
+    Open Browser   ${Flipkart_Url}  Chrome 
+    Maximize Browser Window
