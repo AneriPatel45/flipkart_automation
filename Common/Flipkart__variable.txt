@@ -17,5 +17,3 @@ ${min_range}=    //div[contains(text(),"to")]/ancestor::div/div[1]/select
 ${max_range}=    //body/div[@id='container']/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/section[2]/div[4]/div[3]/select[1]
 ${AllItems}=    //div[@class="_1YokD2 _3Mn1Gg"][1]//div[@class="_1AtVbE col-12-12"]/div/div/div/a/div/div/div/div/img
 ${next} =                //a/span[contains(text(),"Next")]
-${num}=     css=div._36fx1h._6t1WkM._3HqJxg div._1YokD2._2GoDe3 div._1YokD2._3Mn1Gg:nth-child(2) div._1AtVbE.col-12-12:nth-child(${j}) div._13oc-S div._2kHMtA a._1fQZEK div._3pLy-c.row div.col.col-5-12.nlI3QM:nth-child(2) div._3tbKJL div._25b18c > div._30jeq3._1_WHN1
-
